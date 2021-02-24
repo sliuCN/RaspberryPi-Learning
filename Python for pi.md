@@ -136,11 +136,9 @@ GPIO.add_event_callback(channel, my_callback_two)
 * GPIO.remove_event_detect(channel)
 
 > https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/
-
 > https://pypi.org/project/RPi.GPIO/
 
 > https://www.raspberrypi.org/documentation/usage/gpio/python/README.md
-
 # SPI
 
 # UART
