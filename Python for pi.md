@@ -141,6 +141,66 @@ GPIO.add_event_callback(channel, my_callback_two)
 > https://www.raspberrypi.org/documentation/usage/gpio/python/README.md
 # SPI
 
+Speed: supports all speeds, but due to limit of GPIO, over 50Mhz is unlikely to work
+Mode
+  * SPI_CPOL
+  * SPI_CPHA
+  * SPI_CS_HIGH
+  * SPI_NO_CS
+  * SPI_3WIRE
+
+> https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=43442&p=347073
+## spidev
+spidev like s shell 
+``` bash
+echo -ne "\x01\x02\x03" > /dev/spidev0.0
+```
+``` python
+import spidev
+spi = spidev.SpiDev()
+spi.open(bus,device)    # /dev/spidev<bus>.<device>
+
+# Settings
+spi.max_speed_hz=5000
+spi.mode = 0b01         # [CPOL|CPHA] 
+spi.bits_per_word = 8   # 8 :normal 9:LoSSI
+spi.cshigh = False
+spi.loop = False
+spi.no_cs = False
+spi.lsbfirst = True
+spi.threewire = False
+# send/receive
+to_send=[0x01,0x02,0x03]
+
+spi.readbytes(n)
+spi.writebytes(to_send)
+spi.writebytes2(to_send) # large lists, like list size seceeds buffer size /sys/module/spidev/parameters/bufsiz
+
+# list,speed_hz,delay_usec,bits_per_word
+spi.xfer(to_send,5000,1,8)      # cs will released and reactivated between blocks, delay in delay_usec
+spi.xfer2(to_send,5000,1,8)     # cs held between two block
+spi.xfer3(to_send,5000,1,8)     # similar xfer2, large lists
+
+spi.close()
+```
+
+> https://pypi.org/project/spidev/
+## SPI-Sy
+
+``` python
+import spi
+device_0 = spi.openSPI(device='/dev/spidev0.0',mode=0.speed=500000,bits=8;delay=0)
+data_out = (0xFF,0x00,0xFF)
+data_in = spi.transfer(device_0,data_out)
+spi.closeSPI(device_0)
+```
+> https://github.com/lthiery/SPI-Py
+
+## Test Mode
+Loopback test
+
+> https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md
+> https://elinux.org/RPi_SPI
 # UART
 
 # IIC
