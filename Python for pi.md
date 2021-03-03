@@ -40,7 +40,7 @@ while True:
         print("Released")
     sleep(1)
 ```
-> https://gpiozero.readthedocs.io/en/stable/index.html
+> https://gpiozero.readthedocs.io/en/stable/index.html  
 
 ## RPi.GPIO  
 传统的树莓派GPIO控制库，更偏向于C  
@@ -135,10 +135,10 @@ GPIO.add_event_callback(channel, my_callback_two)
 删除事件
 * GPIO.remove_event_detect(channel)
 
-> https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/
-> https://pypi.org/project/RPi.GPIO/
+> https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/  
+> https://pypi.org/project/RPi.GPIO/  
 
-> https://www.raspberrypi.org/documentation/usage/gpio/python/README.md
+> https://www.raspberrypi.org/documentation/usage/gpio/python/README.md  
 # SPI
 
 Speed: supports all speeds, but due to limit of GPIO, over 50Mhz is unlikely to work
@@ -199,7 +199,7 @@ spi.closeSPI(device_0)
 ## Test Mode
 Loopback test
 
-> https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md
+> https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md  
 > https://elinux.org/RPi_SPI
 # UART
 
