@@ -1,4 +1,8 @@
 # GPIO
+```
+sudo apt-get install raspi-gpio
+raspi-gpio funcs
+```
 ## gpiozero
 应用层的GPIO封装，省去了基本的IO操作，可以直接将IO设置成LED，Button等对象  
 包含了这些对象的常用动作（如LED闪烁，按键按下等）
@@ -202,6 +206,66 @@ Loopback test
 > https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md  
 > https://elinux.org/RPi_SPI
 # UART
+前几代树莓派中有2个内建串口（Pi 4 中有6个）：
+1. PL011 UART
+2. mini UART
+根据型号他们的连接越有不同，详见以下表格：
+|Model  |First PL011(UART0)     |mini UART  |
+|:--:   |:---:                  |:--:       |
+|Zero   |primary                |secondary  |
+|Zero W |secondary(Bluetooth)   |primary    |
+|Pi 1   |primary                |secondary  |
+|Pi 2   |primary                |secondary  |
+|Pi 3   |secondary(Bluetooth)   |primary    |
+|Pi 4   |secondary(Bluetooth)   |primary    |
+mini UART默认是不开启的，UART0默认是开启的  
+在Raspberry Pi OS系统中，他们对应的设备文件如下所示：
+|Linux Device   |    Description    |
+|:--:           |:---:              |
+|/dev/ttys0     |mini UART          |
+|/dev/ttyAMA0   |First PL011(UART0) |
+|/dev/serial0   |primary UART       |
+|/dev/serial1   |secondary UART     |
+可以通过以下命令可以查看串口的映射关系
+``` bash
+ls -l /dev
+```
+串口是linux中常见的外设类型，常用于输出控制台（console）信息。树莓派可以通过配置，将UART使能，但不用于控制台信息的输入输出，自定义串口的收发信息  
+## Raspberry Pi 4 串口的启用和引脚
+|UART   |GPIO   |
+|:-----:|:-----:|
+|0      |14/15  |
+|1      |14/15  |
+|2      |0/1    |
+|3      |4/5    |
+|4      |8/9    |
+|5      |12/13  |
+```
+/boot/config.txt.
+/boot/overlays/README
+```
+> https://raspberrypi.stackexchange.com/questions/104464/where-are-the-uarts-on-the-raspberry-pi-4  
+> https://www.raspberrypi.org/forums/viewtopic.php?t=244827
+## 关闭linux串口控制台输出
+``` bash
+sudo raspi-config
+```
+* option3-Interface Options
+* P6 Seral Port
+* No
+* Yes
+* reboot pi
+## PySerial
+``` python
+import serial
+ser = serial.Serial('/dev/ttys0',9600,EIGHYBITS,parity=PARITY_NONE,stopbits=STOPBITS_ONE,timeout=None)
+ser.Baudtate=115200
+received_data = ser.read(1)
+ser.write(received_data)
+```
+> https://pyserial.readthedocs.io/en/latest/shortintro.html  
+
+> https://www.raspberrypi.org/documentation/configuration/uart.md  
 
 # IIC
 
