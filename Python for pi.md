@@ -269,4 +269,72 @@ ser.write(received_data)
 
 # IIC
 
-# 
+## SMBus
+
+
+> http://www.lm-sensors.org/browser/i2c-tools/trunk/py-smbus/
+> https://www.programcreek.com/python/example/107982/smbus.SMBus
+> https://www.abelectronics.co.uk/kb/article/1094/i2c-part-4---programming-i-c-with-python
+## smbus2
+smbus2使用纯python编程，基本完全兼容SMBus（需要修改module名称）  
+```python
+from smbus2 import SMBus
+
+# Open i2c bus 1 and read one byte from address 80, offset 0
+bus = SMBus(1)
+b = bus.read_byte_data(80, 0)
+print(b)
+bus.close()
+
+with SMBus(1) as bus:
+    b = bus.read_byte_data(80, 0)
+    print(b)
+
+with SMBus(1) as bus:
+    bus.pec = 1  # Enable PEC Packet Error Checking
+    b = bus.read_byte_data(80, 0)
+    print(b)
+
+with SMBus(1) as bus:
+    # Read a block of 16 bytes from address 80, offset 0
+    block = bus.read_i2c_block_data(80, 0, 16)
+    # Returned value is a list of 16 bytes
+    print(block)
+
+
+
+with SMBus(1) as bus:
+    # Write a byte to address 80, offset 0
+    data = 45
+    bus.write_byte_data(80, 0, data)
+
+with SMBus(1) as bus:
+    # Write a block of 8 bytes to address 80 from offset 0
+    data = [1, 2, 3, 4, 5, 6, 7, 8]
+    bus.write_i2c_block_data(80, 0, data)
+```
+python "with as":  
+用于自动关闭设备，防止占用（程序出错时）,类似于:
+``` python
+from smbus2 import SMBus
+bus = SMBus(1)
+try:
+    b = bus.read_byte_data(80, 0)
+    print(b)
+finally:
+    bus.close()
+```  
+
+``` python
+from smbus2 import SMBus, i2c_msg
+
+# Single transaction writing two bytes then read two at address 80
+write = i2c_msg.write(80, [40, 50])
+read = i2c_msg.read(80, 2)
+with SMBus(1) as bus:
+    bus.i2c_rdwr(write, read)
+```
+**?how to read the data?**
+
+> https://pypi.org/project/smbus2/
+#  
