@@ -210,6 +210,7 @@ Loopback test
 1. PL011 UART
 2. mini UART
 根据型号他们的连接越有不同，详见以下表格：
+
 |Model  |First PL011(UART0)     |mini UART  |
 |:--:   |:---:                  |:--:       |
 |Zero   |primary                |secondary  |
@@ -218,14 +219,17 @@ Loopback test
 |Pi 2   |primary                |secondary  |
 |Pi 3   |secondary(Bluetooth)   |primary    |
 |Pi 4   |secondary(Bluetooth)   |primary    |
+
 mini UART默认是不开启的，UART0默认是开启的  
 在Raspberry Pi OS系统中，他们对应的设备文件如下所示：
+
 |Linux Device   |    Description    |
 |:--:           |:---:              |
 |/dev/ttys0     |mini UART          |
 |/dev/ttyAMA0   |First PL011(UART0) |
 |/dev/serial0   |primary UART       |
 |/dev/serial1   |secondary UART     |
+
 可以通过以下命令可以查看串口的映射关系
 ``` bash
 ls -l /dev
@@ -240,6 +244,7 @@ ls -l /dev
 |3      |4/5    |
 |4      |8/9    |
 |5      |12/13  |
+
 ```
 /boot/config.txt.
 /boot/overlays/README
