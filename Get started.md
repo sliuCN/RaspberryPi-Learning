@@ -87,3 +87,13 @@
 > https://www.raspberrypi.org/documentation/usage/gpio/
 
 > https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
+
+## 相关软件
+### 远程连接
+* MobaXterm
+* VNC Viewer
+
+### 烧录镜像
+* balenaEtcher
+* Win32 Disk Imager
+
